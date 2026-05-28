@@ -1,0 +1,31 @@
+# Mulinex Time Sync Systemd Service (Reference)
+# 
+# Destinazione: /etc/systemd/system/mulinex-timesync.service
+# Creato automaticamente da: install_mulinex_timesync.sh
+#
+# Questo file viene caricato PRIMA di multi-user.target
+# ossia prima che la rete sia completamente up
+# 
+# Comandi utili:
+# ─────────────
+# sudo systemctl status mulinex-timesync         # Status
+# sudo systemctl start mulinex-timesync          # Avvia manuale
+# sudo systemctl enable mulinex-timesync         # Abilita boot
+# sudo systemctl disable mulinex-timesync        # Disabilita boot
+# journalctl -u mulinex-timesync -n 50 -f        # Log tempo reale
+
+[Unit]
+Description=Mulinex Time Synchronization Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mulinex_timesync.sh
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mulinex-timesync
+
+[Install]
+WantedBy=multi-user.target

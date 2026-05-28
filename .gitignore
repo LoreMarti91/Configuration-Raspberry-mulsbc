@@ -1,0 +1,77 @@
+# Git Ignore for Mulinex Time Sync
+
+# System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Backup Files
+*.backup
+*.bak
+*.backup.*
+*.tmp
+*.temp
+
+# Log Files (non mettere su repo)
+*.log
+logs/
+log/
+
+# Environment Files (non mettere credenziali)
+.env
+.env.local
+.env.*.local
+
+# OS Specific
+Thumbs.db
+desktop.ini
+*.pid
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary
+temp/
+tmp/
+.tmp/
+*~
+
+# Config sensibili (metti qui se necessario)
+# credentials.conf
+# secrets.json
