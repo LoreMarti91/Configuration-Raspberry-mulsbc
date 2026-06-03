@@ -25,7 +25,7 @@
 
 ```bash
 # Sul PC Ubuntu, copia la config di server NTP
-sudo cp /home/lorenzo/Desktop/Rasp_PD/chronyc\ pc /etc/chrony/chrony.conf
+sudo cp config/chronyc_pc /etc/chrony/chrony.conf
 
 # Riavvia chrony
 sudo systemctl restart chrony
@@ -34,17 +34,18 @@ sudo systemctl restart chrony
 sudo systemctl status chrony
 ```
 
-### **Step 2: Deploy su Rasp Nuova**
+### **Step 2: Deploy su Rasp (via network 100.100.100.X)**
 
 ```bash
-# Da PC, copia lo script
-scp mulinex_deploy_all.sh mulsbc@192.168.2.1:~/
-
 # SSH sulla Rasp
-ssh mulsbc@192.168.2.1
+ssh mulsbc@100.100.100.X
 
-# Installa tutto
-sudo bash ~/mulinex_deploy_all.sh
+# Se hai clonato da GitHub
+git clone https://github.com/mulsbc/Configuration-Raspberry-mulsbc.git
+cd Configuration-Raspberry-mulsbc
+
+# Se sei già nella cartella locale
+sudo bash setup.sh
 
 # Attendi 2-3 minuti (installa dipendenze, configura, verifica)
 ```

@@ -35,17 +35,17 @@ sudo systemctl status chrony
 ### **2️⃣ Clona Repo su Rasp**
 
 ```bash
-# SSH sulla Rasp
-ssh mulsbc@192.168.2.1
+# SSH sulla Rasp (tramite rete 100.100.100.X)
+ssh mulsbc@100.100.100.X
 
-# Clona repo
-git clone https://github.com/tuonome/mulinex-timesync.git
-cd mulinex-timesync
+# Clona repo (sostituisci tuonome con il tuo username GitHub)
+git clone https://github.com/mulsbc/Configuration-Raspberry-mulsbc.git
+cd Configuration-Raspberry-mulsbc
 
 # Esegui setup
 sudo bash setup.sh
 
-# Attendi 2-3 minuti
+# Attendi 2-3 minuti per il completamento
 ```
 
 ### **3️⃣ Test**
@@ -54,11 +54,11 @@ sudo bash setup.sh
 # Verifica sincronizzazione
 chronyc status
 
-# Reboot
+# Reboot per testare avvio automatico
 sudo reboot
 
 # SSH nuovo → vedrai messaggi [Mulinex]
-ssh mulsbc@192.168.2.1
+ssh mulsbc@100.100.100.X
 ```
 
 **Fatto!** ✅
@@ -68,28 +68,40 @@ ssh mulsbc@192.168.2.1
 ## 📂 Struttura Repo
 
 ```
-mulinex-timesync/
-├── setup.sh                         ← ⭐ Esegui questo!
+Configuration-Raspberry-mulsbc/
+├── setup.sh                         ← ⭐ Esegui questo su Rasp!
 ├── config/
-│   ├── chronyc_pc                   ← Config PC server
-│   ├── chronyc_rasp                 ← Config Rasp (ref)
-│   └── chronyc_rasp_CONFIG.conf     ← Config Rasp (usata)
+│   ├── chronyc pc                   ← Config PC server NTP
+│   ├── chronyc_rasp                 ← Config Rasp (riferimento)
+│   └── chronyc_rasp_CONFIG.conf     ← Config Rasp client (utilizzata)
 ├── scripts/
-│   ├── mulinex_timesync.sh          ← Sincronizzazione
-│   ├── mulinex_bagclean.sh          ← Pulizia bag
-│   └── install_mulinex_timesync.sh  ← Setup manuale (alt)
+│   ├── mulinex_timesync.sh          ← Sincronizzazione oraria
+│   ├── mulinex_bagclean.sh          ← Pulizia automatica bag ROS2
+│   └── install_mulinex_timesync.sh  ← Setup manuale (alternativa)
 ├── system/
 │   ├── mulinex-timesync.service     ← Servizio systemd
-│   ├── bashrc_mulinex.sh            ← Hook bash
-│   └── sudoers_mulinex              ← Permessi sudoers
+│   ├── bashrc_mulinex.sh            ← Hook bash per login SSH
+│   └── sudoers_mulinex              ← Permessi sudoers senza password
 ├── docs/
-│   ├── GUIDA_DEFINITIVA.md          ← ⭐ Leggi questa
-│   ├── RIEPILOGO.md                 ← Riepilogo progetto
-│   ├── GUIDA_DEPLOY_AUTOMATICO.md   ← Dettagli deploy
-│   └── ... altre guide ...
+│   ├── GUIDA_DEFINITIVA.md          ← ⭐ Leggi questa prima
+│   ├── RIEPILOGO.md                 ← Struttura del progetto
+│   ├── GUIDA_DEPLOY_AUTOMATICO.md   ← Dettagli deployment
+│   ├── GUIDA_IMPLEMENTAZIONE.md     ← Setup manuale
+│   └── DEBUG_COMMANDS.md            ← Comandi per troubleshooting
 └── examples/
-    └── example_config.md
+    └── example_setup.md
 ```
+
+---
+
+---
+
+## 📋 Prerequisiti
+
+- **Rasp con Ubuntu/Raspberry Pi OS** installato
+- **Utente `mulsbc`** creato e able to sudo senza password
+- **Network 100.100.100.0/24** (adattare IP se diverso)
+- **chrony** sarà installato automaticamente da setup.sh
 
 ---
 

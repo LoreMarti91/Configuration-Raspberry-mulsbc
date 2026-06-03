@@ -382,13 +382,16 @@ PING_TIMEOUT=3
 NET_TIMEOUT=10
 ```
 
-### **Modifica range IP PC:**
+### **Range IP PC - AUTOMATICO:**
 
-Se il PC usa IP diversi, modifica:
-```bash
-ETH_SUBNET="100.100.100"   # Rete ethernet PC
-AP_SUBNET="192.168.2"      # Rete WiFi AP PC
-```
+✅ **Non serve modificare nulla!** Il codice rileva automaticamente:
+- **Ethernet:** scan della subnet dell'IP eth0 (es. 100.100.100.0/24)
+- **WiFi AP:** scan della subnet dell'IP wlan0 (es. 192.168.X.0/24)
+- **Gateway AP:** cerca sempre il .1 della rete WiFi (es. 192.168.X.1)
+
+Se hai network diversi:
+- 100.100.100.0/24 → auto-rilevato da eth0
+- 192.168.X.0/24 → auto-rilevato da wlan0 (dove X è il terzo ottetto di wlan0)
 
 ### **Disabilita boot automatico:**
 
@@ -405,10 +408,13 @@ sudo systemctl disable mulinex-timesync
 **Causa:** Rasp non trova PC
 
 **Soluzione:**
-1. Verifica che PC sia raggiungibile:
+1. Verifica che PC sia raggiungibile sulle reti corrette:
    ```bash
-   ping 100.100.100.X  # Ethernet
-   ping 192.168.2.X    # WiFi
+   # Su ethernet (se eth0 ha IP)
+   ping 100.100.100.X
+   
+   # Su WiFi AP (se wlan0 ha IP come gateway)
+   ping 192.168.X.1    # Dove X è il terzo ottetto di wlan0
    ```
 
 2. Verifica che chrony sia attivo su PC:

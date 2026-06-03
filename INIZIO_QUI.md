@@ -34,17 +34,22 @@ Guida tecnica del deploy automatico. Leggi se:
 
 ```bash
 # Step 1: PC Ubuntu (una volta)
-sudo cp chronyc\ pc /etc/chrony/chrony.conf
+# Copia la config del server NTP
+sudo cp config/chronyc_pc /etc/chrony/chrony.conf
 sudo systemctl restart chrony
 
-# Step 2: Deploy su Rasp
-scp mulinex_deploy_all.sh mulsbc@192.168.2.1:~/
-ssh mulsbc@192.168.2.1
-sudo bash ~/mulinex_deploy_all.sh
+# Step 2: Deploy su Rasp (via network 100.100.100.X)
+ssh mulsbc@100.100.100.X
+cd Configuration-Raspberry-mulsbc
+sudo bash setup.sh
 
 # Step 3: Test
 chronyc status
 sudo reboot
+
+# SSH nuovo dopo reboot
+ssh mulsbc@100.100.100.X
+# → Vedrai messaggi [Mulinex]
 ```
 
 **Fatto!** ✅
