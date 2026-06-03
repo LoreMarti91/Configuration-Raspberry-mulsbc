@@ -229,9 +229,9 @@ if [ -t 0 ]; then
     export ROS_DOMAIN_ID="${_ros_id:-4}"
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
-    cd mulsbc_ws
+    cd /home/mulsbc/mulsbc_ws
     source /opt/ros/humble/setup.bash
-    source ./install/setup.bash
+    source /home/mulsbc/mulsbc_ws/install/setup.bash
 
     echo "[ROS CONFIG]"
     echo "ROS_DOMAIN_ID      = $ROS_DOMAIN_ID"
