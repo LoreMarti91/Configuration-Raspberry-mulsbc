@@ -1,5 +1,3 @@
-### sudo nano /usr/local/bin/mulinex_bagclean.sh
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      /usr/local/bin/mulinex_bagclean.sh                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 #!/bin/bash
 # =============================================================
 # mulinex_bagclean.sh — Mulinex ROS2 bag cleanup
@@ -126,6 +124,12 @@ delete_bags() {
 # ── Chiede conferma yes/no ──
 ask_confirm() {
     local prompt="$1"
+
+   if [ ! -t 0 ]; then
+        print_color "$YELLOW" "  ⚠ Sessione non interattiva — eliminazione saltata."
+        log "Sessione non interattiva — eliminazione saltata per sicurezza."
+        return 1
+    fi
     while true; do
         read -rp "$(echo -e "${YELLOW}  ${prompt} (yes/no): ${RESET}")" answer
         case "$answer" in

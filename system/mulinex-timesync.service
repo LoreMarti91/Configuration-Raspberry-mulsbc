@@ -22,7 +22,7 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/mulinex_timesync.sh
-StandardInput=tty
+StandardInput=null
 StandardOutput=journal
 StandardError=journal
 SyslogIdentifier=mulinex-timesync

@@ -1,4 +1,3 @@
-####               sudo nano /usr/local/bin/mulinex_timesync.sh                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        /usr/local/bin/mulinex_timesync.sh                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 #!/bin/bash
 # =============================================================
 # mulinex_timesync.sh — Mulinex time sync
@@ -6,8 +5,9 @@
 # Logica:
 #   1. Ha internet? → usa NTP pubblici (rimuove sorgente PC)
 #   2. No internet → legge ARP table per trovare IP del PC
-#      a. Prima cerca su ethernet (100.100.100.0/24)
-#      b. Se non trovato, cerca su rete AP (192.168.x.0/24)
+#      a. Prima cerca su ethernet (subnet di eth0, es. 100.100.100.0/24)
+#      b. Se non trovato, cerca su rete AP (subnet di wlan0, es. 192.168.X.0/24)
+#         → Rileva automaticamente il terzo ottetto da wlan0 (adatto a qualsiasi AP)
 #   3. Trovato PC → scrive sources.d, ricarica chrony, makestep
 #   4. Nessuna fonte → log warning
 # =============================================================
