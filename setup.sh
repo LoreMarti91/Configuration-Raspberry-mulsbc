@@ -215,6 +215,34 @@ BASHRC_CONFIG
 chown $SUDO_USER:$SUDO_USER "$BASHRC_PATH"
 log_success "  ✓ ~/.bashrc configurato"
 
+log_info "Configura /root/.bashrc per ROS2..."
+if [ -f /root/.bashrc ]; then
+    cp /root/.bashrc /root/.bashrc.backup.$(date +%Y%m%d_%H%M%S)
+    log_warn " ! Backup di /root/.bashrc creato"
+fi
+sed -i '/# ── Mulinex: ROS2 Config/,/^fi$/d' /root/.bashrc 2>/dev/null || true
+cat >> /root/.bashrc << 'ROOT_BASHRC'
+
+# ── Mulinex: ROS2 Config ──────────────────────────────────────────────
+if [ -t 0 ]; then
+    read -rp "ROS_DOMAIN_ID [default 4]: " _ros_id
+    export ROS_DOMAIN_ID="${_ros_id:-4}"
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+    cd mulsbc_ws
+    source /opt/ros/humble/setup.bash
+    source ./install/setup.bash
+
+    echo "[ROS CONFIG]"
+    echo "ROS_DOMAIN_ID      = $ROS_DOMAIN_ID"
+    echo "RMW_IMPLEMENTATION = $RMW_IMPLEMENTATION"
+
+    PS1='\[\e[32m\]\u\[\e[0m\] | \[\e[36m\]ROS_ID:$ROS_DOMAIN_ID\[\e[0m\] | \[\e[33m\]DDS:${RMW_IMPLEMENTATION#rmw_}\[\e[0m\] | \[\e[34m\]\W\[\e[0m\] \$ '
+    unset _ros_id
+fi
+ROOT_BASHRC
+log_success " ✓ /root/.bashrc configurato"
+
 log_info "Configura sudoers per esecuzione senza password..."
 cat > "/etc/sudoers.d/mulinex" << SUDOERS_CONFIG
 # Mulinex: permessi esecuzione senza password
